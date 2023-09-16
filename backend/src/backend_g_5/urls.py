@@ -19,5 +19,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api-auth/', include('rest_framework.urls')),
     path('customusers/', include('customusers.urls')),  # Incluye las URL de la aplicación "customusers"
 ]

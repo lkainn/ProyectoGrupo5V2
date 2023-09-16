@@ -1,32 +1,23 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import login, logout
-from django.contrib.auth.decorators import login_required
+from rest_framework import generics, status
+from rest_framework.response import Response
+from .models import Registry
+from .serializers import RegistrySerializer
 
-def signup(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            # Iniciar sesión al usuario después del registro
-            login(request, user)
-            return redirect('profile')  # Redirigir a la vista del perfil del usuario
-    else:
-        form = UserCreationForm()
-    return render(request, 'customusers/signup.html', {'form': form})
+class RegistryCreateView(generics.CreateAPIView):
+    queryset = Registry.objects.all()
+    serializer_class = RegistrySerializer
 
-def login_view(request):
-    if request.method == 'POST':
-        form = AuthenticationForm(request, data=request.POST)
-        if form.is_valid():
-            user = form.get_user()
-            login(request, user)
-            return redirect('profile')  # Redirigir a la vista del perfil del usuario
-    else:
-        form = AuthenticationForm()
-    return render(request, 'customusers/login.html', {'form': form})
+    def create(self, request, *args, **kwargs):
+        # Llamar al método create de la superclase para realizar la creación
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
 
-@login_required
-def profile(request):
-    user = request.user
-    return render(request, 'customusers/profile.html', {'user': user})
+        # respuesta en caso de exito
+        headers = self.get_success_headers(serializer.data)
+        response_data = {
+            "success": True,
+            "message": "Registro exitoso",
+            "data": serializer.data,
+        }
+        return Response(response_data, status=status.HTTP_201_CREATED, headers=headers)
