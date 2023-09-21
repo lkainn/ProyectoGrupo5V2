@@ -22,10 +22,9 @@ const RegistrationForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validaciones (puedes mantener esto)
 
     try {
-      // Realiza la solicitud POST a la API
+      // realiza la solicitud POST a la API
       const response = await fetch('http://127.0.0.1:8000/myauth/register/', {
         method: 'POST',
         headers: {
@@ -39,12 +38,11 @@ const RegistrationForm = () => {
         setErrors(data);
         console.error('Error al registrar:', data);
       } else {
-        // Maneja la respuesta de éxito aquí
+        // Manejar la respuesta de éxito aca
         const data = await response.json();
         console.log('Registro exitoso:', data);
       }
     } catch (error) {
-      // Maneja los errores de la API según tus necesidades
       console.error('Error al registrar:', error);
     }
   };

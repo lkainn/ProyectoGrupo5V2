@@ -1,14 +1,60 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import NewTaskForm from './NewTaskForm';
-import TaskEditForm from './TaskEditForm'; // Importa el componente de edición
-import TaskDeleteButton from './TaskDeleteButton'; // Importa el componente de eliminación
-import TaskFilter from './TaskFilter'; // Importa el componente de filtro
-import {} from '../styles/globals.css'
+import TaskEditForm from './TaskEditForm';
+import TaskDeleteButton from './TaskDeleteButton';
+import TaskFilter from './TaskFilter';
+import {} from '../styles/globals.css';
 
 const TasksPage = ({ user, onLogout }) => {
   const [tasks, setTasks] = useState([]);
   const [editingTask, setEditingTask] = useState(null);
-  const [filter, setFilter] = useState('all'); // Estado para el filtro
+  const [filter, setFilter] = useState('all');
+
+  // Hacer una solicitud GET para obtener las tareas del usuario al cargar la página
+  useEffect(() => {
+    // Actualiza la URL para apuntar al endpoint correcto de tu API Django
+    fetch('http://127.0.0.1:8000/taskmanager/tasks/', {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk1MzI0MTAyLCJpYXQiOjE2OTUyNjQxMDIsImp0aSI6IjZjNGJiNjFhNWMzYzRiZDVhOTYwYmY3ZDk2MWQ2ZjI3IiwidXNlcl9pZCI6NCwidXNlcm5hbWUiOiIxMjM0In0.NkU9kTPwKiNxudK2b9WUYCZZdt8MJkTDuylSyyjkqvM`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => setTasks(data))
+      .catch((error) => console.error('Error fetching tasks:', error));
+  }, [user.token]);
+
+  const createTask = (newTaskData) => {
+    fetch('', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk1MzI0MTAyLCJpYXQiOjE2OTUyNjQxMDIsImp0aSI6IjZjNGJiNjFhNWMzYzRiZDVhOTYwYmY3ZDk2MWQ2ZjI3IiwidXNlcl9pZCI6NCwidXNlcm5hbWUiOiIxMjM0In0.NkU9kTPwKiNxudK2b9WUYCZZdt8MJkTDuylSyyjkqvM`,
+      },
+      body: JSON.stringify(newTaskData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setTasks([...tasks, data]);
+        handleAddTask(data);
+      })
+      .catch((error) => console.error('Error creating task:', error));
+  };
+
+
+
+  // Función para filtrar tareas según el estado seleccionado
+  const filterTasks = (filter, tasks) => {
+    if (filter === 'completed') {
+      return tasks.filter((task) => task.completed);
+    } else if (filter === 'incomplete') {
+      return tasks.filter((task) => !task.completed);
+    } else {
+      return tasks;
+    }
+  };
+
+  
 
   const handleAddTask = (newTask) => {
     setTasks([...tasks, newTask]);
@@ -48,34 +94,34 @@ const TasksPage = ({ user, onLogout }) => {
   const filteredTasks = filterTasks(filter, tasks);
 
   return (
-    <div  >
+    <div>
       <p className='mens-container'>Bienvenido, {user.username}!</p>
       <button className='button-container' onClick={onLogout}>Logout</button>
 
-      <NewTaskForm onAddTask={handleAddTask} />
+      <NewTaskForm onAddTask={createTask} />
 
       <div className="task-container">
-    <h2>Lista de tareas</h2>
-    <TaskFilter onFilterChange={handleFilterChange} /> {/* Agrega el componente de filtro */}
-    <ul className="task-list">
-      {filteredTasks.map((task, index) => (
-        <li key={index} className="task-item">
-          <div className="task-info">
-            <strong>{task.title}</strong>: {task.description}
-          </div>
-          <div className="task-actions">
-            <button onClick={() => handleEditTask(task)}>Editar</button>
-            <TaskDeleteButton onDelete={() => handleDeleteTask(task)} /> {/* Agrega el componente de eliminación */}
-            <input
-              type="checkbox"
-              checked={task.completed}
-              onChange={() => handleToggleComplete(task)}
-            /> {/* Checkbox para tareas completadas */}
-          </div>
-        </li>
-      ))}
-    </ul>
-  </div>
+        <h2>Lista de tareas</h2>
+        <TaskFilter onFilterChange={handleFilterChange} />
+        <ul className="task-list">
+          {Array.isArray(filteredTasks) && filteredTasks.map((task, index) => (
+            <li key={index} className="task-item">
+              <div className="task-info">
+                <strong>{task.title}</strong>: {task.description}
+              </div>
+              <div className="task-actions">
+                <button onClick={() => handleEditTask(task)}>Editar</button>
+                <TaskDeleteButton onDelete={() => handleDeleteTask(task)} />
+                <input
+                  type="checkbox"
+                  checked={task.completed}
+                  onChange={() => handleToggleComplete(task)}
+                />
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
 
       {editingTask && (
         <TaskEditForm
@@ -89,14 +135,3 @@ const TasksPage = ({ user, onLogout }) => {
 };
 
 export default TasksPage;
-
-// Función para filtrar tareas según el estado seleccionado
-const filterTasks = (filter, tasks) => {
-  if (filter === 'completed') {
-    return tasks.filter((task) => task.completed);
-  } else if (filter === 'incomplete') {
-    return tasks.filter((task) => !task.completed);
-  } else {
-    return tasks;
-  }
-};

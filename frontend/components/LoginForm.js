@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import {} from '../styles/globals.css'
-
+import {} from '../styles/globals.css';
 
 const LoginForm = ({ onLogin }) => {
   const [username, setUsername] = useState('');
@@ -30,6 +29,9 @@ const LoginForm = ({ onLogin }) => {
 
       if (response.ok) {
         // Inicio de sesión exitoso
+        const data = await response.json();
+
+        // Llamar a la función onLogin con el nombre de usuario
         onLogin(username);
         setErrorMessage('');
       } else {
