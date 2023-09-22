@@ -15,7 +15,7 @@ const TasksPage = ({ user, onLogout }) => {
 
   // Hacer una solicitud GET para obtener las tareas del usuario al cargar la página
   useEffect(() => {
-    // Actualiza la URL para apuntar al endpoint correcto de tu API Django
+    
     fetch('http://127.0.0.1:8000/api/tasks/', {
       method: 'GET',
       headers: {
