@@ -16,7 +16,7 @@ const LoginForm = ({ onLogin }) => {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch('http://127.0.0.1:8000/myauth/login/', {
+      const response = await fetch('http://127.0.0.1:8000/auth/login/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -30,6 +30,9 @@ const LoginForm = ({ onLogin }) => {
       if (response.ok) {
         // Inicio de sesión exitoso
         const data = await response.json();
+
+        // Almacenar el token en el almacenamiento local
+        localStorage.setItem('authToken', data.token);
 
         // Llamar a la función onLogin con el nombre de usuario
         onLogin(username);

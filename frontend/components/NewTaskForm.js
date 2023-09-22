@@ -26,7 +26,7 @@ const NewTaskForm = ({ onAddTask }) => {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk1MzI0MTAyLCJpYXQiOjE2OTUyNjQxMDIsImp0aSI6IjZjNGJiNjFhNWMzYzRiZDVhOTYwYmFjOWE3ZjYzZGQxIiwidXNlcl9pZCI6NCwidXNlcm5hbWUiOiIxMjM0In0.NkU9kTPwKiNxudK2b9WUYCZZdt8MJkTDuylSyyjkqvM`,
+            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk1MzY3NTQ4LCJpYXQiOjE2OTUzMzE1NDgsImp0aSI6IjY5NDg1MTI5ODE2NzQzYjVhODhhNWM0NDE2NDM2OGE2IiwidXNlcl9pZCI6NCwidXNlcm5hbWUiOiIxMjM0In0.F2ffubY8X-1ndLgjGE7_hHc7_tEtXMJPfDy10TGvNDo`,
           },
           body: JSON.stringify(newTaskData),
         });

@@ -10,36 +10,22 @@ const TasksPage = ({ user, onLogout }) => {
   const [editingTask, setEditingTask] = useState(null);
   const [filter, setFilter] = useState('all');
 
+  // Obtener el token del almacenamiento local
+  const authToken = localStorage.getItem('authToken');
+
   // Hacer una solicitud GET para obtener las tareas del usuario al cargar la página
   useEffect(() => {
     // Actualiza la URL para apuntar al endpoint correcto de tu API Django
-    fetch('http://127.0.0.1:8000/taskmanager/tasks/', {
+    fetch('http://127.0.0.1:8000/api/tasks/', {
       method: 'GET',
       headers: {
-        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk1MzI0MTAyLCJpYXQiOjE2OTUyNjQxMDIsImp0aSI6IjZjNGJiNjFhNWMzYzRiZDVhOTYwYmY3ZDk2MWQ2ZjI3IiwidXNlcl9pZCI6NCwidXNlcm5hbWUiOiIxMjM0In0.NkU9kTPwKiNxudK2b9WUYCZZdt8MJkTDuylSyyjkqvM`,
+        Authorization: `Token ${authToken}`, // Incluye el token en el encabezado de autorización
       },
     })
       .then((response) => response.json())
       .then((data) => setTasks(data))
       .catch((error) => console.error('Error fetching tasks:', error));
-  }, [user.token]);
-
-  const createTask = (newTaskData) => {
-    fetch('', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk1MzI0MTAyLCJpYXQiOjE2OTUyNjQxMDIsImp0aSI6IjZjNGJiNjFhNWMzYzRiZDVhOTYwYmY3ZDk2MWQ2ZjI3IiwidXNlcl9pZCI6NCwidXNlcm5hbWUiOiIxMjM0In0.NkU9kTPwKiNxudK2b9WUYCZZdt8MJkTDuylSyyjkqvM`,
-      },
-      body: JSON.stringify(newTaskData),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setTasks([...tasks, data]);
-        handleAddTask(data);
-      })
-      .catch((error) => console.error('Error creating task:', error));
-  };
+  }, [authToken]);
 
 
 
@@ -98,7 +84,7 @@ const TasksPage = ({ user, onLogout }) => {
       <p className='mens-container'>Bienvenido, {user.username}!</p>
       <button className='button-container' onClick={onLogout}>Logout</button>
 
-      <NewTaskForm onAddTask={createTask} />
+      <NewTaskForm onAddTask={handleAddTask} />
 
       <div className="task-container">
         <h2>Lista de tareas</h2>

@@ -21,7 +21,7 @@ const TaskEditForm = ({ task, onUpdateTask, onCancel, user }) => {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoyNTU5MjYzMzczLCJpYXQiOjE2OTUyNjMzNzMsImp0aSI6IjIyN2YzYTI3ZTZiYjQxM2E4N2Q1YjZhYjY0YzAwZmRmIiwidXNlcl9pZCI6IjEyMzRAMTIzNC4xMjM0IiwidXNlcm5hbWUiOiIxMjM0In0.d_jvDbxcZ4z_ItMMGqfJrcRdFhriz7Nr26wmE940xlA`,
+          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk1MzY3NTQ4LCJpYXQiOjE2OTUzMzE1NDgsImp0aSI6IjY5NDg1MTI5ODE2NzQzYjVhODhhNWM0NDE2NDM2OGE2IiwidXNlcl9pZCI6NCwidXNlcm5hbWUiOiIxMjM0In0.F2ffubY8X-1ndLgjGE7_hHc7_tEtXMJPfDy10TGvNDo`,
         },
         body: JSON.stringify(updatedTask),
       });
