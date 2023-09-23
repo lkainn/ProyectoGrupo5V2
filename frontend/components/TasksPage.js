@@ -27,6 +27,8 @@ const TasksPage = ({ user, onLogout }) => {
       .catch((error) => console.error('Error fetching tasks:', error));
   }, [authToken]);
 
+  
+
 
 
   // Función para filtrar tareas según el estado seleccionado
@@ -61,9 +63,27 @@ const TasksPage = ({ user, onLogout }) => {
     setEditingTask(null);
   };
 
+
+  const storedTaskIds = JSON.parse(localStorage.getItem('taskIds')) || [];
+
   const handleDeleteTask = (taskToDelete) => {
-    const updatedTasks = tasks.filter((t) => t !== taskToDelete);
-    setTasks(updatedTasks);
+    // Realiza una solicitud para eliminar la tarea en la API
+    fetch(`http://127.0.0.1:8000/api/tasks/${taskToDelete.id}/`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Token ${authToken}`,
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          // Eliminación exitosa, actualiza la lista de tareas en el estado local
+          const updatedTasks = tasks.filter((task) => task.id !== taskToDelete.id);
+          setTasks(updatedTasks);
+        } else {
+          console.error('Error al eliminar la tarea.');
+        }
+      })
+      .catch((error) => console.error('Error en la solicitud:', error));
   };
 
   const handleToggleComplete = (task) => {
@@ -96,12 +116,13 @@ const TasksPage = ({ user, onLogout }) => {
                 <strong>{task.title}</strong>: {task.description}
               </div>
               <div className="task-actions">
+                <p>Fecha de Creación: {new Date(task.created).toLocaleString()}</p>
                 <button onClick={() => handleEditTask(task)}>Editar</button>
                 <TaskDeleteButton onDelete={() => handleDeleteTask(task)} />
                 <input
                   type="checkbox"
                   checked={task.completed}
-                  onChange={() => handleToggleComplete(task)}
+                  onChange={() => handleToggleComplete(task.id)}
                 />
               </div>
             </li>
