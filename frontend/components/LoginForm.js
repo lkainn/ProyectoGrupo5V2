@@ -34,6 +34,8 @@ const LoginForm = ({ onLogin }) => {
         // Almacenar el token en el almacenamiento local
         localStorage.setItem('authToken', data.token);
 
+       
+
         // Llamar a la función onLogin con el nombre de usuario
         onLogin(username);
         setErrorMessage('');
@@ -47,6 +49,8 @@ const LoginForm = ({ onLogin }) => {
       setErrorMessage('Error en la solicitud. Inténtalo de nuevo más tarde.');
     }
   };
+
+  
 
   return (
     <div className='centrarButton'>

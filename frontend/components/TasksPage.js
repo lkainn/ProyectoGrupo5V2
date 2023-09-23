@@ -9,7 +9,7 @@ const TasksPage = ({ user, onLogout }) => {
   const [tasks, setTasks] = useState([]);
   const [editingTask, setEditingTask] = useState(null);
   const [filter, setFilter] = useState('all');
-  const [isEditing, setIsEditing] = useState(false);
+ 
 
   // Obtener el token del almacenamiento local
   const authToken = localStorage.getItem('authToken');
@@ -115,12 +115,36 @@ const TasksPage = ({ user, onLogout }) => {
     setFilter(selectedFilter);
   };
 
-  const filteredTasks = filterTasks(filter, tasks);
+  const filteredTasks = filterTasks(filter, tasks);3
+
+  const handleLogout = () => {
+    // Realiza una solicitud al backend para cerrar la sesión
+    fetch('http://127.0.0.1:8000/auth/logout/', {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Token ${authToken}`,
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          // Elimina el token de autenticación del almacenamiento local
+          localStorage.removeItem('authToken');
+          // Ejecuta la función de cierre de sesión proporcionada como prop
+          onLogout();
+        } else {
+          console.error('Error al cerrar la sesión.');
+        }
+      })
+      .catch((error) => console.error('Error en la solicitud:', error));
+  };
+
+
+
 
   return (
     <div>
-      <p className='mens-container'>Bienvenido, {user.username}!</p>
-      <button className='button-container' onClick={onLogout}>Logout</button>
+      <p className='mens-container'>Bienvenido!</p>
+      <button className='button-container' onClick={handleLogout}>Logout</button>
 
       <NewTaskForm onAddTask={handleAddTask} />
 

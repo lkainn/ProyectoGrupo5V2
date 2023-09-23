@@ -57,6 +57,6 @@ def user_login(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             token, created = Token.objects.get_or_create(user=user)
-            return Response({'message': 'Inicio de sesión exitoso', 'token': token.key}, status=status.HTTP_200_OK)
+            return Response({'message': 'Inicio de sesión exitoso', 'token': token.key, 'username': user.username}, status=status.HTTP_200_OK)
         else:
             return Response({'message': 'Credenciales incorrectas'}, status=status.HTTP_400_BAD_REQUEST)
