@@ -9,6 +9,7 @@ const TasksPage = ({ user, onLogout }) => {
   const [tasks, setTasks] = useState([]);
   const [editingTask, setEditingTask] = useState(null);
   const [filter, setFilter] = useState('all');
+  const [isEditing, setIsEditing] = useState(false);
 
   // Obtener el token del almacenamiento local
   const authToken = localStorage.getItem('authToken');
@@ -87,10 +88,27 @@ const TasksPage = ({ user, onLogout }) => {
   };
 
   const handleToggleComplete = (task) => {
-    const updatedTasks = tasks.map((t) =>
-      t === task ? { ...t, completed: !t.completed } : t
-    );
-    setTasks(updatedTasks);
+    const updatedTask = { ...task, completed: !task.completed };
+  
+    fetch(`http://127.0.0.1:8000/api/tasks/${task.id}/`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Token ${authToken}`,
+      },
+      body: JSON.stringify(updatedTask),
+    })
+      .then((response) => {
+        if (response.ok) {
+          const updatedTasks = tasks.map((t) =>
+            t.id === task.id ? updatedTask : t
+          );
+          setTasks(updatedTasks);
+        } else {
+          console.error('Error al cambiar el estado de la tarea.');
+        }
+      })
+      .catch((error) => console.error('Error en la solicitud:', error));
   };
 
   const handleFilterChange = (selectedFilter) => {
@@ -116,13 +134,17 @@ const TasksPage = ({ user, onLogout }) => {
                 <strong>{task.title}</strong>: {task.description}
               </div>
               <div className="task-actions">
-                <p>Fecha de Creación: {new Date(task.created).toLocaleDateString()}</p>
+              <p>
+               {editingTask && editingTask.id === task.id
+               ? 'Fecha de Edición'
+               : 'Fecha de Creación'}: {new Date(task.created).toLocaleDateString()}
+              </p>
                 <button onClick={() => handleEditTask(task)}>Editar</button>
                 <TaskDeleteButton onDelete={() => handleDeleteTask(task)} />
                 <input
-                  type="checkbox"
-                  checked={task.completed}
-                  onChange={() => handleToggleComplete(task.id)}
+                 type="checkbox"
+                 checked={task.completed}
+                 onChange={() => handleToggleComplete(task)}
                 />
               </div>
             </li>
