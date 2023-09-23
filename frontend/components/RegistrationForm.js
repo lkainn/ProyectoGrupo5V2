@@ -1,43 +1,50 @@
 import React, { useState } from 'react';
 
 const RegistrationForm = () => {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [formData, setFormData] = useState({
+    username: '',
+    email: '',
+    password: '',
+    password2: '',
+    first_name: '',
+    last_name: '',
+  });
   const [errors, setErrors] = useState({});
 
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
   };
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validaciones
-    const validationErrors = {};
 
-    if (username.trim() === '') {
-      validationErrors.username = 'Username is required';
-    }
+    try {
+      // realiza la solicitud POST a la API
+      const response = await fetch('http://127.0.0.1:8000/auth/register/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
 
-    if (email.trim() === '') {
-      validationErrors.email = 'Email is required';
+      if (!response.ok) {
+        const data = await response.json();
+        setErrors(data);
+        console.error('Error al registrar:', data);
+      } else {
+        // Manejar la respuesta de éxito aca
+        const data = await response.json();
+        console.log('Registro exitoso:', data);
+      }
+    } catch (error) {
+      console.error('Error al registrar:', error);
     }
-    
-    if (password.trim() === '') {
-      validationErrors.password = 'Password is required';
-    }
-    setErrors(validationErrors);
-
-    // POR HACER: logica de registro e interaccion con la API.
   };
 
   return (
@@ -49,8 +56,9 @@ const RegistrationForm = () => {
           <input
             type="text"
             id="username"
-            value={username}
-            onChange={handleUsernameChange}
+            name="username"
+            value={formData.username}
+            onChange={handleChange}
             required
           />
           {errors.username && <span className="error">{errors.username}</span>}
@@ -60,8 +68,9 @@ const RegistrationForm = () => {
           <input
             type="email"
             id="email"
-            value={email}
-            onChange={handleEmailChange}
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
             required
           />
           {errors.email && <span className="error">{errors.email}</span>}
@@ -71,11 +80,48 @@ const RegistrationForm = () => {
           <input
             type="password"
             id="password"
-            value={password}
-            onChange={handlePasswordChange}
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
             required
           />
           {errors.password && <span className="error">{errors.password}</span>}
+        </div>
+        <div>
+          <label htmlFor="password2">Confirmar contraseña:</label>
+          <input
+            type="password"
+            id="password2"
+            name="password2"
+            value={formData.password2}
+            onChange={handleChange}
+            required
+          />
+          {errors.password2 && <span className="error">{errors.password2}</span>}
+        </div>
+        <div>
+          <label htmlFor="first_name">Nombre:</label>
+          <input
+            type="text"
+            id="first_name"
+            name="first_name"
+            value={formData.first_name}
+            onChange={handleChange}
+            required
+          />
+          {errors.first_name && <span className="error">{errors.first_name}</span>}
+        </div>
+        <div>
+          <label htmlFor="last_name">Apellido:</label>
+          <input
+            type="text"
+            id="last_name"
+            name="last_name"
+            value={formData.last_name}
+            onChange={handleChange}
+            required
+          />
+          {errors.last_name && <span className="error">{errors.last_name}</span>}
         </div>
         <button type="submit">Registrarse</button>
       </form>
