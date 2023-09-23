@@ -12,16 +12,19 @@ const TaskEditForm = ({ task, onUpdateTask, onCancel, user }) => {
     setDescription(e.target.value);
   };
 
+
+  const authToken = localStorage.getItem('authToken'); 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const updatedTask = { ...task, title, description };
 
     try {
-      const response = await fetch(`http://127.0.0.1:8000/taskmanager/tasks/${task.id}/update/`, {
+      const response = await fetch(`http://127.0.0.1:8000/api/tasks/${task.id}/`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk1MzY3NTQ4LCJpYXQiOjE2OTUzMzE1NDgsImp0aSI6IjY5NDg1MTI5ODE2NzQzYjVhODhhNWM0NDE2NDM2OGE2IiwidXNlcl9pZCI6NCwidXNlcm5hbWUiOiIxMjM0In0.F2ffubY8X-1ndLgjGE7_hHc7_tEtXMJPfDy10TGvNDo`,
+          Authorization: `Token ${authToken}`,
         },
         body: JSON.stringify(updatedTask),
       });
