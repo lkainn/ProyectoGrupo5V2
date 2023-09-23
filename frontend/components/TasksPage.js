@@ -48,7 +48,7 @@ const TasksPage = ({ user, onLogout }) => {
   const filteredTasks = filterTasks(filter, tasks);
 
   return (
-    <div  >
+    <div  className='container2'>
       <p className='mens-container'>Bienvenido, {user.username}!</p>
       <button className='button-container' onClick={onLogout}>Logout</button>
 
@@ -66,7 +66,7 @@ const TasksPage = ({ user, onLogout }) => {
           <div className="task-actions">
             <button onClick={() => handleEditTask(task)}>Editar</button>
             <TaskDeleteButton onDelete={() => handleDeleteTask(task)} /> {/* Agrega el componente de eliminación */}
-            <input
+            <input className='input-check'
               type="checkbox"
               checked={task.completed}
               onChange={() => handleToggleComplete(task)}

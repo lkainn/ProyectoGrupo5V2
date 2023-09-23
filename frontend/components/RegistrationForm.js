@@ -41,7 +41,7 @@ const RegistrationForm = () => {
   };
 
   return (
-    <div>
+    <div  className='container' >
       <h2>Formulario de registro</h2>
       <form onSubmit={handleSubmit}>
         <div>

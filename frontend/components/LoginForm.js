@@ -20,11 +20,18 @@ const LoginForm = ({ onLogin }) => {
   };
 
   return (
+    <div className='container' >
     <div className='centrarButton'>
       <h2>Login</h2>
-      <input type="text" placeholder="Nombre de usuario" onChange={handleUsernameChange} />
-      <input type="password" placeholder="Contraseña" onChange={handlePasswordChange} />
+      <p>Nombre de usuario</p>
+      <input type="text" placeholder="Ingresa tu usuario" onChange={handleUsernameChange} />
+      <p>Contraseña</p>
+      <input type="password" placeholder="Ingresa tu contraseña" onChange={handlePasswordChange} />
+      <br/>
+      <br/>
+      <br/>
       <button onClick={handleLogin}>Login</button>
+    </div>
     </div>
   );
 };

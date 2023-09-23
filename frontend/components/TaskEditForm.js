@@ -23,7 +23,7 @@ const TaskEditForm = ({ task, onUpdateTask, onCancel }) => {
       <h2>Editar Tarea</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="edit-title">Título:</label>
+          <p>Titulo</p>
           <input
             type="text"
             id="edit-title"
@@ -33,7 +33,7 @@ const TaskEditForm = ({ task, onUpdateTask, onCancel }) => {
           />
         </div>
         <div>
-          <label htmlFor="edit-description">Descripción:</label>
+          <p>Descripcion</p>
           <textarea
             id="edit-description"
             value={description}
@@ -42,6 +42,7 @@ const TaskEditForm = ({ task, onUpdateTask, onCancel }) => {
           />
         </div>
         <button type="submit">Guardar Cambios</button>
+        <br/>
         <button type="button" onClick={onCancel}>
           Cancelar
         </button>

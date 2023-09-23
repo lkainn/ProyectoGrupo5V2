@@ -27,11 +27,12 @@ const NewTaskForm = ({ onAddTask }) => {
   };
 
   return (
-    <div>
+    <div >
       <h2>Crear nueva tarea</h2>
       <form onSubmit={handleSubmit}>
+      
         <div className="input-group">
-          <label htmlFor="title">Titulo:</label>
+         <p>Titulo</p>
           <input
             type="text"
             id="title"
@@ -41,7 +42,7 @@ const NewTaskForm = ({ onAddTask }) => {
           />
         </div>
         <div className="input-group">
-          <label htmlFor="description">Descripcion:</label>
+        <p>Descripcion</p>
           <textarea
             id="description"
             value={description}

@@ -17,16 +17,21 @@ const Home = () => {
   };
 
   return (
-    <div className='container'>
-      <h1>Administrador de tareas</h1>
+    <div>
+    <h1>Administrador de tareas</h1>
+    
+    <div >
+      
       {user ? (
         <TasksPage user={user} onLogout={handleLogout} />
       ) : (
         <>
           <LoginForm onLogin={handleLogin} />
-          <p>No tenes cuenta? <Link href="/register">Regístrate aca</Link></p>
+          
         </>
       )}
+    </div>
+      <p>No tenes cuenta? <Link href="/register">Regístrate aca</Link></p>
     </div>
   );
 };

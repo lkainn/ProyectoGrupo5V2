@@ -1,4 +1,4 @@
-// File: X:\Proyecto grupo 5\proyectogrupo5\frontend\app\page.js
+// File: C:\Users\Municipio\Desktop\ArgProg4\ProyectoGrupo5V2\frontend\app\page.js
 import * as entry from '../../../app/page.js'
 import type { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
