@@ -116,7 +116,7 @@ const TasksPage = ({ user, onLogout }) => {
                 <strong>{task.title}</strong>: {task.description}
               </div>
               <div className="task-actions">
-                <p>Fecha de Creación: {new Date(task.created).toLocaleString()}</p>
+                <p>Fecha de Creación: {new Date(task.created).toLocaleDateString()}</p>
                 <button onClick={() => handleEditTask(task)}>Editar</button>
                 <TaskDeleteButton onDelete={() => handleDeleteTask(task)} />
                 <input
