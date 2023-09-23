@@ -142,42 +142,13 @@ const TasksPage = ({ user, onLogout }) => {
 
 
   return (
-<<<<<<< HEAD
-    <div  className='container2'>
-      <p className='mens-container'>Bienvenido, {user.username}!</p>
-      <button className='button-container' onClick={onLogout}>Logout</button>
-=======
     <div>
       <p className='mens-container'>Bienvenido!</p>
       <button className='button-container' onClick={handleLogout}>Logout</button>
->>>>>>> 6268d2f648018fae034beee7d66c8fa23b6d71d8
 
       <NewTaskForm onAddTask={handleAddTask} />
 
       <div className="task-container">
-<<<<<<< HEAD
-    <h2>Lista de tareas</h2>
-    <TaskFilter onFilterChange={handleFilterChange} /> {/* Agrega el componente de filtro */}
-    <ul className="task-list">
-      {filteredTasks.map((task, index) => (
-        <li key={index} className="task-item">
-          <div className="task-info">
-            <strong>{task.title}</strong>: {task.description}
-          </div>
-          <div className="task-actions">
-            <button onClick={() => handleEditTask(task)}>Editar</button>
-            <TaskDeleteButton onDelete={() => handleDeleteTask(task)} /> {/* Agrega el componente de eliminación */}
-            <input className='input-check'
-              type="checkbox"
-              checked={task.completed}
-              onChange={() => handleToggleComplete(task)}
-            /> {/* Checkbox para tareas completadas */}
-          </div>
-        </li>
-      ))}
-    </ul>
-  </div>
-=======
         <h2>Lista de tareas</h2>
         <TaskFilter onFilterChange={handleFilterChange} />
         <ul className="task-list">
@@ -204,7 +175,6 @@ const TasksPage = ({ user, onLogout }) => {
           ))}
         </ul>
       </div>
->>>>>>> 6268d2f648018fae034beee7d66c8fa23b6d71d8
 
       {editingTask && (
         <TaskEditForm

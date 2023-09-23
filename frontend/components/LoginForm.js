@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Link from 'next/link';
 import {} from '../styles/globals.css';
 
 const LoginForm = ({ onLogin }) => {
@@ -56,21 +57,12 @@ const LoginForm = ({ onLogin }) => {
     <div className='container' >
     <div className='centrarButton'>
       <h2>Login</h2>
-<<<<<<< HEAD
-      <p>Nombre de usuario</p>
-      <input type="text" placeholder="Ingresa tu usuario" onChange={handleUsernameChange} />
-      <p>Contraseña</p>
-      <input type="password" placeholder="Ingresa tu contraseña" onChange={handlePasswordChange} />
-      <br/>
-      <br/>
-      <br/>
-=======
       {errorMessage && <p className="error">{errorMessage}</p>}
       <input type="text" placeholder="Nombre de usuario" onChange={handleUsernameChange} />
       <input type="password" placeholder="Contraseña" onChange={handlePasswordChange} />
->>>>>>> 6268d2f648018fae034beee7d66c8fa23b6d71d8
       <button onClick={handleLogin}>Login</button>
     </div>
+    <p>No tenes cuenta? <Link href="/register">Regístrate aca</Link></p>
     </div>
   );
 };
