@@ -123,6 +123,7 @@ const RegistrationForm = () => {
           />
           {errors.last_name && <span className="error">{errors.last_name}</span>}
         </div>
+        <br />
         <button type="submit">Registrarse</button>
       </form>
     </div>

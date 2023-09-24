@@ -71,7 +71,14 @@ const TaskEditForm = ({ task, onUpdateTask, onCancel, user }) => {
             required
           />
         </div>
+
+        
+
         <button type="submit">{isEditing ? 'Guardar Cambios' : 'Crear Tarea'}</button>
+
+        
+        <br/>
+
         <button type="button" onClick={onCancel}>
           Cancelar
         </button>

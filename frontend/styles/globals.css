@@ -17,24 +17,25 @@ body {
 
 .container {
   background-color: rgb(250, 250, 250);
-  display: block;
-  width: 50%;
-  height: 90%;
-  padding:20%;
+  display: flex;
+  flex-direction: column; /* Cambia a disposición vertical en pantallas pequeñas */
+  align-items: flex-start;
+  padding:25%;
   border: 1px solid #ccc;
   border-radius: 10px;
   text-align: center; /* Centramos el contenido horizontalmente */
+  
 }
 
 .container2 {
   background-color: rgb(250, 250, 250);
   display: block;
-  width:75%x;
-  height: 90%;
-  padding: 30px;
+  width: 350px;
+  padding: 5px;
   border: 1px solid #ccc;
   border-radius: 10px;
-  text-align: center; /* Centramos el contenido horizontalmente */
+  text-align: center; /* Centra el contenido horizontalmente */
+ 
 }
 
 h1, h2, p, label{
@@ -147,15 +148,18 @@ button:hover {
 
 .task-item {
   display: flex;
+  flex-direction: column; /* Cambia a disposición vertical en pantallas pequeñas */
+  align-items: flex-start;
   justify-content: space-between; /* Espacio uniforme entre elementos */
-  align-items: center; /* Centra verticalmente los elementos */
   border: 1px solid #ccc;
   padding: 10px;
   margin-bottom: 10px;
+  max-width: 330px; /* Opcional: Limita el ancho máximo del elemento */
+  overflow-x: auto; /* Puedes usar 'scroll' en lugar de 'auto' si prefieres siempre mostrar la barra de desplazamiento */
 }
 
 .task-info {
-  flex: 2; /* El contenido de la tarea ocupa la mayor parte del espacio */
+  display: block; /* El contenido de la tarea ocupa la mayor parte del espacio */
 }
 
 .task-actions {

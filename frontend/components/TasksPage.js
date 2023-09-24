@@ -142,40 +142,39 @@ const TasksPage = ({ user, onLogout }) => {
 
 
   return (
-    <div>
-      <p className='mens-container'>Bienvenido!</p>
-      <button className='button-container' onClick={handleLogout}>Logout</button>
 
-      <NewTaskForm onAddTask={handleAddTask} />
+    <div  className='container2'>   
+        
+    
+      <p className='mens-container'>Bienvenido, {user.username}!</p>
+      <button className='button-container' onClick={onLogout}>Logout</button>
 
-      <div className="task-container">
-        <h2>Lista de tareas</h2>
-        <TaskFilter onFilterChange={handleFilterChange} />
-        <ul className="task-list">
-          {Array.isArray(filteredTasks) && filteredTasks.map((task, index) => (
-            <li key={index} className="task-item">
-              <div className="task-info">
-                <strong>{task.title}</strong>: {task.description}
-              </div>
-              <div className="task-actions">
-              <p>
-               {editingTask && editingTask.id === task.id
-               ? 'Fecha de Edición'
-               : 'Fecha de Creación'}: {new Date(task.created).toLocaleDateString()}
-              </p>
-                <button onClick={() => handleEditTask(task)}>Editar</button>
-                <TaskDeleteButton onDelete={() => handleDeleteTask(task)} />
-                <input
-                 type="checkbox"
-                 checked={task.completed}
-                 onChange={() => handleToggleComplete(task)}
-                />
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
 
+      <NewTaskForm onAddTask={handleAddTask} />        
+    
+
+    <h2>Lista de tareas</h2>
+    <TaskFilter onFilterChange={handleFilterChange} /> {/* Agrega el componente de filtro */}
+    <ul className="task-list">
+      {filteredTasks.map((task, index) => (
+        <li key={index} className="task-item">
+          <div className="task-info">
+            <strong>{task.title}</strong>: {task.description}
+          </div>
+          <div className="task-actions">
+            <button onClick={() => handleEditTask(task)}>Editar</button>
+            <TaskDeleteButton onDelete={() => handleDeleteTask(task)} /> {/* Agrega el componente de eliminación */}
+            <input className='input-check'
+              type="checkbox"
+              checked={task.completed}
+              onChange={() => handleToggleComplete(task)}
+            /> {/* Checkbox para tareas completadas */}
+          </div>
+        </li>
+      ))}
+    </ul>
+  
+  
       {editingTask && (
         <TaskEditForm
           task={editingTask}
@@ -184,6 +183,7 @@ const TasksPage = ({ user, onLogout }) => {
         />
       )}
     </div>
+    
   );
 };
 
