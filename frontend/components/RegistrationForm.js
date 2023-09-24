@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const RegistrationForm = () => {
   const [formData, setFormData] = useState({
@@ -10,6 +10,8 @@ const RegistrationForm = () => {
     last_name: '',
   });
   const [errors, setErrors] = useState({});
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [countdown, setCountdown] = useState(3);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -38,14 +40,35 @@ const RegistrationForm = () => {
         setErrors(data);
         console.error('Error al registrar:', data);
       } else {
-        // Manejar la respuesta de éxito aca
-        const data = await response.json();
-        console.log('Registro exitoso:', data);
+        
+        setIsSuccess(true);
+
+        
+        startCountdown();
       }
     } catch (error) {
       console.error('Error al registrar:', error);
     }
   };
+
+  const startCountdown = () => {
+    let countdownTimer = setInterval(() => {
+      setCountdown((prevCountdown) => prevCountdown - 1);
+    }, 1000);
+
+    setTimeout(() => {
+      clearInterval(countdownTimer);
+      
+      window.location.href = '/'; 
+    }, 3000); 
+  };
+
+  useEffect(() => {
+    
+    if (countdown === 0) {
+      window.location.href = '/'; 
+    }
+  }, [countdown]);
 
   return (
     <div  className='container' >
@@ -126,6 +149,13 @@ const RegistrationForm = () => {
         <br />
         <button type="submit">Registrarse</button>
       </form>
+      
+      {isSuccess && (
+        <div className="success-modal">
+          <p>La cuenta fue creada correctamente.</p>
+          <p>Redirigiendo en {countdown} segundos...</p>
+        </div>
+      )}
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {} from '../styles/globals.css';
 
-const NewTaskForm = ({ onAddTask }) => {
+const NewTaskForm = ({ onAddTask, onClose, isAddingTask }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
 
@@ -38,6 +38,8 @@ const NewTaskForm = ({ onAddTask }) => {
           onAddTask(newTask);
           setTitle('');
           setDescription('');
+
+          onClose();
         } else {
           console.error('Error al crear la tarea.');
         }
@@ -48,7 +50,7 @@ const NewTaskForm = ({ onAddTask }) => {
   };
 
   return (
-    <div >
+    <div className={`new-task-card ${isAddingTask ? 'new-task-card-open' : ''}`} >
       <h2>Crear nueva tarea</h2>
       <form onSubmit={handleSubmit}>
       

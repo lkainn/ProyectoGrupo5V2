@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Link from 'next/link';
 import {} from '../styles/globals.css';
 
 
@@ -71,6 +72,7 @@ const LoginForm = ({ onLogin }) => {
 
       <button onClick={handleLogin}>Login</button>
     </div>
+    <p>No tenes cuenta? <Link href="/register">Regístrate aca</Link></p>
     </div>
   );
 };
