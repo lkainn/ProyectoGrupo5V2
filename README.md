@@ -103,7 +103,9 @@ Estas tecnologías se han combinado de manera efectiva para crear una aplicació
   
   
 
-**Repositorio**: https://github.com/lkainn/ProyectoGrupo5V2
+## Repositorio
+
+https://github.com/lkainn/ProyectoGrupo5V2
 
   
   
