@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import {} from '../styles/globals.css';
 
+
 const LoginForm = ({ onLogin }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -41,9 +42,7 @@ const LoginForm = ({ onLogin }) => {
         onLogin(username);
         setErrorMessage('');
       } else {
-        // Inicio de sesión fallido
-        const data = await response.json();
-        setErrorMessage(data.error || 'Error en el inicio de sesión');
+        <TasksPage />
       }
     } catch (error) {
       console.error('Error en la solicitud:', error);
@@ -57,9 +56,20 @@ const LoginForm = ({ onLogin }) => {
     <div className='container' >
     <div className='centrarButton'>
       <h2>Login</h2>
+
       {errorMessage && <p className="error">{errorMessage}</p>}
-      <input type="text" placeholder="Nombre de usuario" onChange={handleUsernameChange} />
-      <input type="password" placeholder="Contraseña" onChange={handlePasswordChange} />
+
+
+      <p>Nombre de usuario</p>
+      <input type="text" placeholder="Ingresa tu usuario" onChange={handleUsernameChange} />
+      <p>Contraseña</p>
+      <input type="password" placeholder="Ingresa tu contraseña" onChange={handlePasswordChange} />
+      <br/>
+      <br/>
+      <br/>    
+      <br/>
+
+
       <button onClick={handleLogin}>Login</button>
     </div>
     <p>No tenes cuenta? <Link href="/register">Regístrate aca</Link></p>
