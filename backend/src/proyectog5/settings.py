@@ -141,6 +141,5 @@ REGISTRATION_ENABLED = True
 CORS_ALLOW_ALL_ORIGINS = False
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",  # Reemplaza esto con la URL de tu frontend
-    # Agrega otras URLs permitidas si es necesario
-]
+    "http://localhost:3000", 
+    ]
